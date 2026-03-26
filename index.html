@@ -90,7 +90,6 @@
             <div id="mainWheel" class="wheel"></div>
         </div>
         <p>โลกกำลังหมุนไปในทิศทางที่ยากจะหยุดยั้ง</p>
-        <button id="start-btn">สดับฟังเสียงกลองศึก</button>
     </section>
 
     <section id="s2">
@@ -109,32 +108,19 @@
     <section id="s5">
         <h1>ชัยชนะที่แท้จริง</h1>
         <p>คือการหยุดวงจรแห่งการเบียดเบียน<br><b>"ความเมตตา คือความกล้าหาญที่ยิ่งใหญ่ที่สุด"</b></p>
-        <div style="margin-top: 50px; font-size: 0.9rem; color: #555;">- บทเรียนจากเทวสุรสงคราม สู่สันติภาพโลก -</div>
+        <div style="margin-top: 50px; font-size: 0.9rem; color: #555;">- บทเรียนจากเทวาสุรสงคราม สู่สันติภาพโลก -</div>
     </section>
 </div>
 
-<audio id="warDrum" loop>
-    <source src="https://www.soundjay.com/misc/sounds/drum-roll-01.mp3" type="audio/mpeg">
-</audio>
-
 <script>
     const wheel = document.getElementById('mainWheel');
-    const audio = document.getElementById('warDrum');
-    const startBtn = document.getElementById('start-btn');
 
-    // คลิกเพื่อเริ่มเสียง
-    startBtn.addEventListener('click', () => {
-        audio.play();
-        startBtn.innerText = "เลื่อนลงเพื่อเริ่มการเดินทาง";
-        startBtn.style.opacity = "0.5";
-    });
-
-    // ตรวจจับการเลื่อนแบบ Simple & Stable
+    // ตรวจจับการเลื่อนเพื่อหยุดกงล้อเพียงอย่างเดียว
     window.onscroll = function() {
         let scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
         let windowHeight = window.innerHeight;
-
-        // ถ้าเลื่อนลงมาเกิน 2.5 เท่าของความสูงจอ (เข้าใกล้ Section 4) ให้หยุดกงล้อ
+        
+        // เมื่อเลื่อนมาถึงจุดที่ "หยุดรถเดี๋ยวนี้!" (ประมาณ Section 4)
         if (scrollPos > windowHeight * 2.5) {
             wheel.classList.add('stopped');
         } else {
