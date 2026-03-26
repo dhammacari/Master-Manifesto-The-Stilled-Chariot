@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>The Stilled Chariot | ราชรถที่หยุดนิ่ง</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@200;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --text: #e0e0e0;
+            --accent: #d32f2f;
+        }
+        * { box-sizing: border-box; }
+        body, html {
+            margin: 0; padding: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Sarabun', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Container สำหรับเนื้อหาทั้งหมด */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* แต่ละช่วงของเนื้อหา */
+        section {
+            min-height: 100vh; /* ให้แต่ละช่วงยาวเต็มหน้าจอ */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-bottom: 1px solid #1a1a1a; /* เส้นแบ่งเบาๆ แบบ Artisan */
+        }
+
+        h1 { font-weight: 200; font-size: 2.8rem; margin-bottom: 1rem; }
+        p { font-size: 1.4rem; color: #aaa; max-width: 600px; }
+
+        /* กงล้อรถศึก */
+        .wheel-container {
+            margin: 40px 0;
+            position: relative;
+        }
+        .wheel {
+            width: 120px; height: 120px;
+            border: 3px solid var(--text);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: spin 3s linear infinite;
+        }
+        .wheel::before, .wheel::after {
+            content: ''; position: absolute;
+            background: var(--text);
+        }
+        .wheel::before { width: 100%; height: 2px; }
+        .wheel::after { width: 2px; height: 100%; }
+
+        /* สถานะหยุดรถ */
+        .stop-signal { color: var(--accent); font-weight: 700; font-size: 3.5rem; }
+        .wheel.stopped {
+            animation-play-state: paused;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(211, 47, 47, 0.4);
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* ปุ่มเริ่มต้น (เพื่อ Activate เสียง) */
+        #start-btn {
+            background: none; border: 1px solid var(--text);
+            color: var(--text); padding: 10px 20px;
+            cursor: pointer; font-family: inherit;
+            transition: 0.3s; margin-top: 20px;
+        }
+        #start-btn:hover { background: var(--text); color: var(--bg); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <section id="s1">
+        <h1>กงล้อแห่งความขัดแย้ง...</h1>
+        <div class="wheel-container">
+            <div id="mainWheel" class="wheel"></div>
+        </div>
+        <p>โลกกำลังหมุนไปในทิศทางที่ยากจะหยุดยั้ง</p>
+        <button id="start-btn">สดับฟังเสียงกลองศึก</button>
+    </section>
+
+    <section id="s2">
+        <p>ท่ามกลางไฟสงครามที่ลุกโชน<br>เสียงกลองศึกดังกึกก้องบดบังเสียงอ้อนวอน</p>
+    </section>
+
+    <section id="s3">
+        <p>ชีวิตผู้บริสุทธิ์เปรียบเสมือน "ลูกนกในรัง"<br>ที่สั่นเทาอยู่ใต้กงล้อเหล็กมหาศาล</p>
+    </section>
+
+    <section id="s4">
+        <div class="stop-signal">"หยุดรถเดี๋ยวนี้!"</div>
+        <p style="margin-top: 20px;">ท้าวสักกะยอมเสี่ยงชีวิตตนเอง<br>ดีกว่าเห็นผู้เปราะบางถูกบดขยี้</p>
+    </section>
+
+    <section id="s5">
+        <h1>ชัยชนะที่แท้จริง</h1>
+        <p>คือการหยุดวงจรแห่งการเบียดเบียน<br><b>"ความเมตตา คือความกล้าหาญที่ยิ่งใหญ่ที่สุด"</b></p>
+        <div style="margin-top: 50px; font-size: 0.9rem; color: #555;">- บทเรียนจากเทวสุรสงคราม สู่สันติภาพโลก -</div>
+    </section>
+</div>
+
+<audio id="warDrum" loop>
+    <source src="https://www.soundjay.com/misc/sounds/drum-roll-01.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    const wheel = document.getElementById('mainWheel');
+    const audio = document.getElementById('warDrum');
+    const startBtn = document.getElementById('start-btn');
+
+    // คลิกเพื่อเริ่มเสียง
+    startBtn.addEventListener('click', () => {
+        audio.play();
+        startBtn.innerText = "เลื่อนลงเพื่อเริ่มการเดินทาง";
+        startBtn.style.opacity = "0.5";
+    });
+
+    // ตรวจจับการเลื่อนแบบ Simple & Stable
+    window.onscroll = function() {
+        let scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+        let windowHeight = window.innerHeight;
+
+        // ถ้าเลื่อนลงมาเกิน 2.5 เท่าของความสูงจอ (เข้าใกล้ Section 4) ให้หยุดกงล้อ
+        if (scrollPos > windowHeight * 2.5) {
+            wheel.classList.add('stopped');
+        } else {
+            wheel.classList.remove('stopped');
+        }
+    };
+</script>
+
+</body>
+</html>
